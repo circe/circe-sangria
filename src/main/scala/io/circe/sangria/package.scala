@@ -33,7 +33,7 @@ package object sangria {
       case v: Boolean ⇒ Json.fromBoolean(v)
       case v: Int ⇒ Json.fromInt(v)
       case v: Long ⇒ Json.fromLong(v)
-      case v: Float ⇒ Json.fromDoubleOrNull(v)
+      case v: Float ⇒ Json.fromFloatOrNull(v)
       case v: Double ⇒ Json.fromDoubleOrNull(v)
       case v: BigInt ⇒ Json.fromBigInt(v)
       case v: BigDecimal ⇒ Json.fromBigDecimal(v)
