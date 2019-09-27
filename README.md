@@ -1,13 +1,43 @@
-[Sangria](http://sangria-graphql.org/) [circe](http://circe.io) marshalling.
+# circe-sangria
 
-[![Build Status](https://travis-ci.org/sangria-graphql/sangria-circe.svg?branch=master)](https://travis-ci.org/sangria-graphql/sangria-circe) [![Coverage Status](http://coveralls.io/repos/sangria-graphql/sangria-circe/badge.svg?branch=master&service=github)](http://coveralls.io/github/sangria-graphql/sangria-circe?branch=master) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.sangria-graphql/sangria-circe_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.sangria-graphql/sangria-circe_2.11) [![License](http://img.shields.io/:license-Apache%202-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt) [![Join the chat at https://gitter.im/sangria-graphql/sangria](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sangria-graphql/sangria?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build status](https://img.shields.io/travis/circe/circe-sangria/master.svg)](https://travis-ci.org/circe/circe-sangria)
+[![Coverage status](https://img.shields.io/codecov/c/github/circe/circe-sangria/master.svg)](https://codecov.io/github/circe/circe-sangria)
+[![Gitter](https://img.shields.io/badge/gitter-join%20chat-green.svg)](https://gitter.im/circe/circe)
+[![Maven Central](https://img.shields.io/maven-central/v/io.circe/circe-sangria_2.12.svg)](https://maven-badges.herokuapp.com/maven-central/io.circe/circe-sangria_2.12)
 
-SBT Configuration:
+[Sangria](http://sangria-graphql.org/) marshalling with [Circe](http://circe.io).
+
+Note that this project is a fork of [sangria-circe](https://github.com/sangria-graphql/sangria-circe).
+Since Circe is being updated more frequently than Sangria, it seems to make sense for the integration
+module to live in the Circe organization.
+
+Configuration for sbt:
 
 ```scala
-libraryDependencies += "org.sangria-graphql" %% "sangria-circe" % "1.2.1"
+libraryDependencies += "io.circe" %% "circe-sangria" % "0.1.0"
 ```
+
+## Contributors and participation
+
+All Circe projects support the [Scala code of conduct][code-of-conduct] and we want
+all of their channels (Gitter, GitHub, etc.) to be welcoming environments for everyone.
+
+Please see the [Circe contributors' guide][contributing] for details on how to submit a pull
+request.
 
 ## License
 
-**sangria-circe** is licensed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+circe-sangria is licensed under the **[Apache License, Version 2.0][apache]**
+(the "License"); you may not use this software except in compliance with the
+License.
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+[apache]: http://www.apache.org/licenses/LICENSE-2.0
+[circe]: https://github.com/circe/circe
+[code-of-conduct]: https://www.scala-lang.org/conduct/
+[contributing]: https://circe.github.io/circe/contributing.html

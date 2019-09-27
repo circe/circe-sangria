@@ -1,56 +1,103 @@
-name := "sangria-circe"
-organization := "org.sangria-graphql"
-version := "1.2.2-SNAPSHOT"
+organization in ThisBuild := "io.circe"
 
-description := "Sangria circe marshalling"
-homepage := Some(url("http://sangria-graphql.org"))
-licenses := Seq("Apache License, ASL Version 2.0" → url("http://www.apache.org/licenses/LICENSE-2.0"))
-
-scalaVersion := "2.12.6"
-crossScalaVersions := Seq("2.11.11", "2.12.6")
-
-scalacOptions ++= Seq("-deprecation", "-feature")
-
-scalacOptions ++= {
-  if (scalaVersion.value startsWith "2.12")
-    Seq.empty
-  else
-    Seq("-target:jvm-1.7")
-}
-
-val circeVersion = "0.9.3"
-
-libraryDependencies ++= Seq(
-  "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.1",
-
-  "io.circe" %% "circe-core" % circeVersion,
-  "io.circe" %% "circe-generic" % circeVersion % Test,
-
-  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.1" % Test,
-  "org.scalatest" %% "scalatest" % "3.0.5" % Test
+val compilerOptions = Seq(
+  "-deprecation",
+  "-encoding", "UTF-8",
+  "-feature",
+  "-language:existentials",
+  "-language:higherKinds",
+  "-unchecked",
+  "-Yno-adapted-args",
+  "-Ypartial-unification",
+  "-Ywarn-dead-code",
+  "-Ywarn-numeric-widen",
+  "-Ywarn-unused-import",
+  "-Xfuture"
 )
 
-// Publishing
+val circeVersion = "0.12.1"
 
-publishMavenStyle := true
-publishArtifact in Test := false
-pomIncludeRepository := (_ ⇒ false)
-publishTo := Some(
-  if (version.value.trim.endsWith("SNAPSHOT"))
-    "snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
-  else
-    "releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2")
+val baseSettings = Seq(
+  scalacOptions ++= compilerOptions,
+  scalacOptions in (Compile, console) ~= {
+    _.filterNot(Set("-Ywarn-unused-import"))
+  },
+  scalacOptions in (Test, console) ~= {
+    _.filterNot(Set("-Ywarn-unused-import"))
+  },
+  coverageHighlighting := true,
+  coverageScalacPluginVersion := "1.3.1",
+  (scalastyleSources in Compile) ++= (unmanagedSourceDirectories in Compile).value
+)
 
-startYear := Some(2016)
-organizationHomepage := Some(url("https://github.com/sangria-graphql"))
-developers := Developer("OlegIlyenko", "Oleg Ilyenko", "", url("https://github.com/OlegIlyenko")) :: Nil
-scmInfo := Some(ScmInfo(
-  browseUrl = url("https://github.com/sangria-graphql/sangria-circe.git"),
-  connection = "scm:git:git@github.com:sangria-graphql/sangria-circe.git"
-))
+val allSettings = baseSettings ++ publishSettings
 
-// nice *magenta* prompt!
+val docMappingsApiDir = settingKey[String]("Subdirectory in site target directory for API docs")
 
-shellPrompt in ThisBuild := { state ⇒
-  scala.Console.MAGENTA + Project.extract(state).currentRef.project + "> " + scala.Console.RESET
-}
+val root = project.in(file("."))
+  .settings(allSettings)
+  .settings(
+    moduleName := "circe-sangria",
+    libraryDependencies ++= Seq(
+      "io.circe" %% "circe-core" % circeVersion,
+      "io.circe" %% "circe-generic" % circeVersion % Test,
+      "io.circe" %% "circe-testing" % circeVersion % Test,
+      "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.3",
+      "org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.1" % Test
+    ),
+    ghpagesNoJekyll := true,
+    docMappingsApiDir := "api",
+    addMappingsToSiteDir(mappings in (Compile, packageDoc), docMappingsApiDir)
+  )
+
+
+lazy val publishSettings = Seq(
+  releaseCrossBuild := true,
+  releasePublishArtifactsAction := PgpKeys.publishSigned.value,
+  homepage := Some(url("https://github.com/circe/circe-sangria")),
+  licenses := Seq("Apache 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
+  publishMavenStyle := true,
+  publishArtifact in Test := false,
+  pomIncludeRepository := { _ => false },
+  publishTo := {
+    val nexus = "https://oss.sonatype.org/"
+    if (isSnapshot.value)
+      Some("snapshots" at nexus + "content/repositories/snapshots")
+    else
+      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+  },
+  autoAPIMappings := true,
+  apiURL := Some(url("https://circe.github.io/circe-sangria/api/")),
+  scmInfo := Some(
+    ScmInfo(
+      url("https://github.com/circe/circe-sangria"),
+      "scm:git:git@github.com:circe/circe-sangria.git"
+    )
+  ),
+  developers := List(
+    Developer(
+      "OlegIlyenko",
+      "Oleg Ilyenko",
+      "",
+      url("https://github.com/OlegIlyenko")
+    ),
+    Developer(
+      "travisbrown",
+      "Travis Brown",
+      "travisrobertbrown@gmail.com",
+      url("https://twitter.com/travisbrown")
+    )
+  )
+)
+
+credentials ++= (
+  for {
+    username <- Option(System.getenv().get("SONATYPE_USERNAME"))
+    password <- Option(System.getenv().get("SONATYPE_PASSWORD"))
+  } yield Credentials(
+    "Sonatype Nexus Repository Manager",
+    "oss.sonatype.org",
+    username,
+    password
+  )
+).toSeq
