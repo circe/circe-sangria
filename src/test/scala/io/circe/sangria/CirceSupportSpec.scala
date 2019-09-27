@@ -1,8 +1,7 @@
-package sangria.marshalling
+package io.circe.sangria
 
 import org.scalatest.{ Matchers, WordSpec }
 
-import sangria.marshalling.circe._
 import sangria.marshalling.testkit._
 
 import io.circe.Json

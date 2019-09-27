@@ -1,8 +1,17 @@
-package sangria.marshalling
+package io.circe
 
-import io.circe._
+import _root_.sangria.marshalling.{
+  ArrayMapBuilder,
+  FromInput,
+  InputParsingError,
+  InputUnmarshaller,
+  ResultMarshaller,
+  ResultMarshallerForType,
+  ScalarValueInfo,
+  ToInput
+}
 
-object circe {
+package object sangria {
   implicit object CirceResultMarshaller extends ResultMarshaller {
     type Node = Json
     type MapBuilder = ArrayMapBuilder[Node]
