@@ -1,4 +1,4 @@
-llanguage: scala
+language: scala
 
 scala:
   - 2.12.10
