@@ -44,7 +44,7 @@ val root = project
       "io.circe" %% "circe-core" % circeVersion,
       "io.circe" %% "circe-generic" % circeVersion % Test,
       "io.circe" %% "circe-testing" % circeVersion % Test,
-      "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.3",
+      "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.4",
       "org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.1" % Test
     ),
     ghpagesNoJekyll := true,
