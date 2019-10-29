@@ -45,7 +45,7 @@ val root = project
       "io.circe" %% "circe-generic" % circeVersion % Test,
       "io.circe" %% "circe-testing" % circeVersion % Test,
       "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.4",
-      "org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.1" % Test
+      "org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.2" % Test
     ),
     ghpagesNoJekyll := true,
     docMappingsApiDir := "api",
