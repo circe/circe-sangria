@@ -7,9 +7,7 @@
 
 [Sangria](http://sangria-graphql.org/) marshalling with [Circe](http://circe.io).
 
-Note that this project is a fork of [sangria-circe](https://github.com/sangria-graphql/sangria-circe).
-Since Circe is being updated more frequently than Sangria, it seems to make sense for the integration
-module to live in the Circe organization.
+Update: this project is now archived. Please use [sangria-circe](https://github.com/sangria-graphql/sangria-circe).
 
 Configuration for sbt:
 
